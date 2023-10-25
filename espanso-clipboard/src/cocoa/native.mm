@@ -22,14 +22,25 @@
 #import <Foundation/Foundation.h>
 #include <string.h>
 
-int32_t clipboard_get_text(char * buffer, int32_t buffer_size) {
+int32_t clipboard_get_text_size() {
   NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
   for (id element in pasteboard.pasteboardItems) {
     NSString *string = [element stringForType: NSPasteboardTypeString];
     if (string != NULL) {
       const char * text = [string UTF8String];
-      strncpy(buffer, text, buffer_size);
+      return strlen(text);
+    }
+  }
+  return 0;
+}
 
+int32_t clipboard_get_text(char * buffer) {
+  NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+  for (id element in pasteboard.pasteboardItems) {
+    NSString *string = [element stringForType: NSPasteboardTypeString];
+    if (string != NULL) {
+      const char * text = [string UTF8String];
+      strncpy(buffer, text, strlen(text));
       return 1;
     }
   }

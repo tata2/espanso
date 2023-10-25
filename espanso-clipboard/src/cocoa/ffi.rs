@@ -25,4 +25,6 @@ extern "C" {
   pub fn clipboard_set_text(text: *const c_char) -> i32;
   pub fn clipboard_set_image(image_path: *const c_char) -> i32;
   pub fn clipboard_set_html(html_descriptor: *const c_char, fallback_text: *const c_char) -> i32;
+  pub fn clipboard_get_text_size() -> i32;
+
 }
